@@ -254,12 +254,13 @@ abstract class BaseErrorHandler
     protected function _getMessage(\Exception $exception)
     {
         $config = $this->_options;
+        $debug = Configure::read('debug');
         $message = sprintf(
             "[%s] %s",
             get_class($exception),
             $exception->getMessage()
         );
-        if (method_exists($exception, 'getAttributes')) {
+        if (method_exists($exception, 'getAttributes') && $debug) {
             $attributes = $exception->getAttributes();
             if ($attributes) {
                 $message .= "\nException Attributes: " . var_export($exception->getAttributes(), true);
